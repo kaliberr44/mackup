@@ -12,8 +12,8 @@ from . import constants
 
 
 # Flag that controls how user confirmation works.
-# If True, the user wants to say "yes" to everything.
-FORCE_YES = False
+# If True, the user wants to say "no" to everything.
+FORCE_NO = False
 
 
 def confirm(question):
@@ -26,8 +26,8 @@ def confirm(question):
     Returns:
         (boolean): Confirmed or not
     """
-    if FORCE_YES:
-        return True
+    if FORCE_NO:
+        return False
 
     while True:
         # Python 3 check

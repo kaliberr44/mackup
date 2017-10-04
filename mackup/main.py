@@ -13,7 +13,7 @@ Usage:
 
 Options:
   -h --help     Show this screen.
-  -f --force    Force every question asked to be answered with "Yes".
+  -f --force    Force every question asked to be answered with "NO".
   -n --dry-run  Show steps without executing.
   -v --verbose  Show additional details.
   --version     Show version.
@@ -68,9 +68,9 @@ def main():
         if verbose:
             print(("\n{0} {1} {0}").format(header("---"), bold(app_name)))
 
-    # If we want to answer mackup with "yes" for each question
+    # If we want to answer mackup with "no" for each question
     if args['--force']:
-        utils.FORCE_YES = True
+        utils.FORCE_NO = True
 
     dry_run = args['--dry-run']
 
