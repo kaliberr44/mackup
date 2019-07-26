@@ -23,7 +23,7 @@ class ApplicationProfile(object):
             files (list)
         """
         assert isinstance(mackup, Mackup)
-        assert isinstance(files, set)
+        assert isinstance(files, list)
 
         self.mackup = mackup
         self.files = list(files)
