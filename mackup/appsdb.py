@@ -57,25 +57,21 @@ class ApplicationsDatabase(object):
                 home = os.path.expanduser('~/')
                 failobj = "{}.config".format(home)
                 xdg_config_home = os.environ.get('XDG_CONFIG_HOME', failobj)
-                if xdg_config_home:
-                    if not os.path.exists(xdg_config_home):
-                        raise ValueError('$XDG_CONFIG_HOME: {} does not exist'
-                                         .format(xdg_config_home))
-                    if not xdg_config_home.startswith(home):
-                        raise ValueError('$XDG_CONFIG_HOME: {} must be '
-                                         'somewhere within your home '
-                                         'directory: {}'
-                                         .format(xdg_config_home, home))
-                    if config.has_section('xdg_configuration_files'):
-                        for path in config.options('xdg_configuration_files'):
-                            if path.startswith('/'):
-                                raise ValueError('Unsupported absolute path: '
-                                                 '{}'
-                                                 .format(path))
-                            path = os.path.join(xdg_config_home, path)
-                            path = path.replace(home, '')
-                            (self.apps[app_name]['configuration_files']
-                                .add(path))
+                if not xdg_config_home.startswith(home):
+                    raise ValueError('$XDG_CONFIG_HOME: {} must be '
+                                     'somewhere within your home '
+                                     'directory: {}'
+                                     .format(xdg_config_home, home))
+                if config.has_section('xdg_configuration_files'):
+                    for path in config.options('xdg_configuration_files'):
+                        if path.startswith('/'):
+                            raise ValueError('Unsupported absolute path: '
+                                             '{}'
+                                             .format(path))
+                        path = os.path.join(xdg_config_home, path)
+                        path = path.replace(home, '')
+                        (self.apps[app_name]['configuration_files']
+                            .add(path))
 
     @staticmethod
     def get_config_files():
@@ -83,7 +79,7 @@ class ApplicationsDatabase(object):
         Return the application configuration files.
 
         Return a list of configuration files describing the apps supported by
-        Mackup. The files return are absolute full path to those files.
+        Mackup. The files returned are absolute full path to those files.
         e.g. /usr/lib/mackup/applications/bash.cfg
 
         Only one config file per application should be returned, custom config
@@ -143,7 +139,7 @@ class ApplicationsDatabase(object):
         Returns:
             set of str.
         """
-        return self.apps[name]['configuration_files']
+        return sorted(self.apps[name]['configuration_files'])
 
     def get_app_names(self):
         """
